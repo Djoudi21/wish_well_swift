@@ -3,7 +3,6 @@ import SwiftUI
 struct LoginScreen: View {
     @EnvironmentObject var viewModel: LoginViewModel // Access the ViewModel from the environment
     @State private var isRegisterViewPresented = false // State to trigger the modal
-    // Use NavigationPath to control the entire navigation stack
 
     var body: some View {
         NavigationStack() {

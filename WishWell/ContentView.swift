@@ -16,10 +16,12 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     @StateObject private var viewModel = LoginViewModel()
+    @StateObject private var contactViewModel = ContactViewModel()
 
     var body: some View {
         if viewModel.isAuthenticated {
-            TabsView() // Show TabView when authenticated
+            TabsView().environmentObject(contactViewModel)
+
         } else {
             LoginScreen().environmentObject(viewModel)
         }

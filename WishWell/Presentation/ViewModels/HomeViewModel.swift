@@ -65,8 +65,12 @@ class HomeViewModel: ObservableObject {
         SuggestedGift(id:"2", name: "Gift 1", picture: "", price: 20.0, description: "qsdqds")
     ]
     
+    init() {
+        // Any initialization logic, such as fetching stored credentials
+    }
+    
     
     func formattedPrice(for gift: Gift) -> String {
-            return formatPrice(gift.price)
-        }
+        return formatPrice(gift.price)
+    }
 }
