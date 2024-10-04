@@ -8,17 +8,34 @@
 import SwiftUI
 
 struct ContactsFiltersSection: View {
+    @EnvironmentObject var viewModel: ContactViewModel // Access the ViewModel from the environment
     @State private var selectedOption = "Famille"
     
-    let options = ["Famille", "Amis", "Collegues"]
+    // Create a dictionary mapping labels to RelationshipType
+   let options: [String: RelationshipType] = [
+       "Famille": .family,
+       "Amis": .friend,
+       "Collegues": .colleague
+   ]
+    
     var body: some View {
         HStack {
             Picker("Select an Group", selection: $selectedOption) {
-                ForEach(options, id: \.self) { option in
-                    Text(option).tag(option)
+                ForEach(Array(options.keys), id: \.self) { label in
+                    Text(label).tag(options[label])
                 }
-            }.pickerStyle(MenuPickerStyle()) // Make it look like a dropdown
-        }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onChange(of: selectedOption) { oldValue, newValue in
+                let relationship = options[newValue] ?? .family
+                viewModel.filterContactByRelationship(for: relationship)
+            }
+            
+            CustomButton(label: "Reset") {
+                print("TOTO")
+                viewModel.resetFilters()
+            }
+        }.padding()
     }
 }
 

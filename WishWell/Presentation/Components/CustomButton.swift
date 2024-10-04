@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomButton: View {
-    @Binding var label: String
+    var label: LocalizedStringKey // Change to LocalizedStringKey
     var action: () -> Void // Closure to hold the action
     var body: some View {
         Button(action: {
@@ -27,5 +27,5 @@ struct CustomButton: View {
 }
 
 #Preview {
-    CustomButton(label: .constant("Press"), action: {})
+    CustomButton(label: "Press", action: {})
 }

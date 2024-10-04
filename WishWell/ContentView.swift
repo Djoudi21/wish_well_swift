@@ -19,12 +19,15 @@ struct ContentView: View {
     @StateObject private var contactViewModel = ContactViewModel()
 
     var body: some View {
-        if viewModel.isAuthenticated {
-            TabsView().environmentObject(contactViewModel)
-
-        } else {
-            LoginScreen().environmentObject(viewModel)
-        }
+        Group {
+                  if viewModel.isAuthenticated {
+                      TabsView()
+                          .environmentObject(contactViewModel)
+                  } else {
+                      LoginScreen()
+                          .environmentObject(viewModel)
+                  }
+              }
     }
 
     private func addItem() {

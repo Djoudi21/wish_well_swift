@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContactsScreen: View {
     @EnvironmentObject var viewModel: ContactViewModel // Access the ViewModel from the environment
+    @State private var isContactFormresented = false // State to trigger the modal
 
     var body: some View {
         NavigationStack {
@@ -16,13 +17,12 @@ struct ContactsScreen: View {
                 ContactSearchSection()
                 ContactsFiltersSection()
                 Spacer()
-                ContactsList(viewModel: viewModel)
+                ContactsList(filteredContacts: $viewModel.filteredContacts)
                 Spacer()
             }.navigationTitle("").toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                   Button(action: {
-                      // Your button action here
-                      print("Button tapped")
+                      isContactFormresented = true
                   }) {
                       Image(systemName: "plus.circle")
                           .resizable()
@@ -32,7 +32,21 @@ struct ContactsScreen: View {
                   }
               }
             }
+            
+            // Sheet presentation for the modal view
+            .sheet(isPresented: $isContactFormresented) {
+                ContactFormScreen() // This will be presented modally
+            }
         }
+        .task {
+           do {
+               // Assuming your viewModel has an async method to fetch contacts
+               try await viewModel.fetchAllContacts()
+           } catch {
+               // Handle any errors
+               print("Failed to fetch contacts: \(error)")
+           }
+       }
     }
 }
 

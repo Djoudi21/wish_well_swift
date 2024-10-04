@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ContactsList: View {
-    @ObservedObject var viewModel: ContactViewModel // Use ObservedObject
+    @Binding var filteredContacts: [ContactEntity]
 
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    ForEach($viewModel.contacts) {contact in
+                    ForEach($filteredContacts) {contact in
                         ContactsListItem(contact: contact)
                     }
                     .padding(.vertical)
@@ -26,5 +26,8 @@ struct ContactsList: View {
 
 #Preview {
     let viewModel = ContactViewModel()
-    ContactsList(viewModel: viewModel)
+    let filteredContacts = viewModel.filteredContacts
+    ContactsList(filteredContacts: .constant([ContactEntity(id: UUID(), username: "Maman", email: "a@a.com", relationship:.colleague, events: [
+        EventEntity(id: "1", type: .birthday, date: Date())
+    ], nextEvent: EventEntity(id: "1", type: .birthday, date: Date()))]))
 }

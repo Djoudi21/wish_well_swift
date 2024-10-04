@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LoginForm: View {
     @EnvironmentObject var viewModel: LoginViewModel // Access the ViewModel from the environment
-    @State var formButtonLabel: String = "Login"
     var body: some View {
         TextField("Username", text: $viewModel.username)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -25,7 +24,7 @@ struct LoginForm: View {
                             .padding()
                     }
         
-        CustomButton(label: $formButtonLabel) {
+        CustomButton(label: "Login") {
             viewModel.login()
             if viewModel.isAuthenticated {
                 print("LA")

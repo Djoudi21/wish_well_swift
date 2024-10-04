@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContactsListItem: View {
-    @Binding var contact: Contact
+    @Binding var contact: ContactEntity
     var body: some View {
         VStack {
             HStack {
@@ -22,12 +22,17 @@ struct ContactsListItem: View {
                 Text(contact.nextEvent.type.rawValue).padding()
                 Text(formatDate(contact.nextEvent.date)).padding()
             }
-        }.padding().background(Color.red).cornerRadius(5)
+        }.padding().overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.blue, lineWidth: 2)
+                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2) // Light outer shadow
+        )
+
     }
 }
 
 #Preview {
-    ContactsListItem(contact: .constant(Contact(id: "1", username: "toto", relationship: .family, events: [
-        Event(id: "1", type: .birthday, date: Date())
-    ], nextEvent: Event(id: "1", type: .birthday, date: Date()))))
+    ContactsListItem(contact: .constant(ContactEntity(id: UUID(), username: "toto", email: "a@a.com", relationship: .family, events: [
+        EventEntity(id: "1", type: .birthday, date: Date())
+    ], nextEvent: EventEntity(id: "1", type: .birthday, date: Date()))))
 }

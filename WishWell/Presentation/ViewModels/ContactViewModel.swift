@@ -7,60 +7,71 @@
 
 import Foundation
 
-enum RelationshipType: String, CaseIterable, Identifiable {
-    case family = "Family"
-    case friend = "Friend"
-    
-    var id: String { self.rawValue }
-}
-
-enum EventType: String, CaseIterable, Identifiable {
-    case birthday = "Birthday"
-    
-    var id: String { self.rawValue }
-}
-
-struct Event: Identifiable {
-    var id: String
-    var type: EventType
-    var date: Date
-}
-
-struct Contact: Identifiable {
-    var id: String
+struct NewContactFormValues: Encodable {
     var username: String
     var relationship: RelationshipType
-    var events: [Event]
-    var nextEvent: Event
+    var event: EventType
+    var birthday: Date
 }
 
 class ContactViewModel: ObservableObject {
     @Published var searchInputValue: String = ""
-    @Published var contacts: [Contact] = [
-        Contact(id: "1", username: "Maman", relationship:.family, events: [
-            Event(id: "1", type: .birthday, date: Date())
-        ], nextEvent: Event(id: "1", type: .birthday, date: Date())),
-        Contact(id: "2", username: "Maman", relationship:.family, events: [
-            Event(id: "1", type: .birthday, date: Date())
-        ], nextEvent: Event(id: "1", type: .birthday, date: Date())),
-        Contact(id: "3", username: "Maman", relationship:.family, events: [
-            Event(id: "1", type: .birthday, date: Date())
-        ], nextEvent: Event(id: "1", type: .birthday, date: Date())),
-        Contact(id: "4", username: "Maman", relationship:.family, events: [
-            Event(id: "1", type: .birthday, date: Date())
-        ], nextEvent: Event(id: "1", type: .birthday, date: Date()))
-    ]
+    @Published var contacts: [ContactEntity] = []
+    @Published var filteredContacts: [ContactEntity] = []
     
-    init() {
-        // Any initialization logic, such as fetching stored credentials
+    init() {}
+    
+    func fetchAllContacts() async throws {
+        let contactRepository = HttpContactRepository()
+        let fetchContactsUseCase = FetchAllContactsUseCase(contactRepository: contactRepository)
+        do {
+            let fetchedContacts = try await fetchContactsUseCase.execute()
+            DispatchQueue.main.async { [weak self] in
+                self?.contacts = fetchedContacts // Ensure this runs on the main thread
+                self?.filteredContacts = fetchedContacts // Ensure this runs on the main thread
+            }
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.contacts = []
+                self?.filteredContacts = []
+            }
+        }
+    }
+    
+    func addContact(using newContactForm: NewContactFormValues) async throws {
+        let contactRepository = HttpContactRepository()
+        let addContactUseCase = AddContactUseCase(contactRepository: contactRepository)
+        do {
+            try await addContactUseCase.execute(newContactForm: newContactForm)
+            // Re-fetch contacts after adding a new one
+            try await fetchAllContacts()
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.contacts = []
+                self?.filteredContacts = []
+            }
+        }
     }
     
     
-    func searchContact(){
-        print("Searching for contact with input: \(searchInputValue)")  // Now use the input value
+    func searchContact(using inputValue: String){
+        guard !inputValue.isEmpty else {
+            resetFilters()
+            return
+        }
+        
+        filteredContacts = contacts.filter {
+            $0.username.lowercased().contains(inputValue.lowercased())
+        }
     }
     
-    func filterContact(){
-        print("Searching for contact with input: \(searchInputValue)")  // Now use the input value
+    func filterContactByRelationship(for relationship: RelationshipType){
+        filteredContacts = contacts.filter {
+            $0.relationship == relationship
+        }
+    }
+    
+    func resetFilters() {
+        filteredContacts = contacts
     }
 }
