@@ -12,15 +12,19 @@ struct ContactsListItem: View {
     var body: some View {
         VStack {
             HStack {
-                Text(contact.username).padding()
+                Text(contact.name).padding()
                 Spacer()
                 Text(contact.relationship.rawValue).padding()
                 Spacer()
                 Image(systemName: "bell.fill")
             }
             HStack{
-                Text(contact.nextEvent.type.rawValue).padding()
-                Text(formatDate(contact.nextEvent.date)).padding()
+                if let nextEvent = contact.nextEvent {
+                    Text(nextEvent.type.rawValue).padding()
+                    Text(formatDate(nextEvent.date)).padding()
+                } else {
+                    Text("No Upcoming Event").padding()
+                }
             }
         }.padding().overlay(
             RoundedRectangle(cornerRadius: 10)
@@ -32,7 +36,7 @@ struct ContactsListItem: View {
 }
 
 #Preview {
-    ContactsListItem(contact: .constant(ContactEntity(id: UUID(), username: "toto", email: "a@a.com", relationship: .family, events: [
-        EventEntity(id: "1", type: .birthday, date: Date())
-    ], nextEvent: EventEntity(id: "1", type: .birthday, date: Date()))))
+    ContactsListItem(contact: .constant(ContactEntity(id: UUID(), name: "toto", relationship: .family, events: [
+        EventEntity(id: UUID(), name: "event name", type: .birthday, date: Date(), contactIds: [UUID()])
+    ], nextEvent: EventEntity(id: UUID(), name: "event name", type: .birthday, date: Date(), contactIds: [UUID()]))))
 }

@@ -17,9 +17,21 @@ enum RelationshipType: String, CaseIterable, Identifiable, Codable {
 
 struct ContactEntity: Identifiable, Codable {
     var id: UUID?
-    var username: String
-    var email: String
+    var name: String
     var relationship: RelationshipType
     var events: [EventEntity]
-    var nextEvent: EventEntity
-}
+    var nextEvent: EventEntity?
+    
+    init(
+           id: UUID?,
+           name: String,
+           relationship: RelationshipType,
+           events: [EventEntity] = [],
+           nextEvent: EventEntity?
+       ) {
+           self.id = id
+           self.name = name
+           self.relationship = relationship
+           self.events = events
+           self.nextEvent = nextEvent
+       }}

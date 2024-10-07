@@ -10,6 +10,7 @@ import Foundation
 class FetchAllContactsUseCase {
     
     private let contactRepository: ContactRepositoryProtocol
+    private let fetchContactMapper = FetchContactMapper()
 
      // Injecting the repository via initializer
     init(contactRepository: ContactRepositoryProtocol) {
@@ -24,11 +25,8 @@ class FetchAllContactsUseCase {
         var contactEntities: [ContactEntity] = []
         
         for contact in contacts {
-            if let fetchMapper = ContactMapperFactory.getMapper(forKey: "fetch-contact") {
-                let contactEntity = fetchMapper.toEntity(contact)
-                // Append the mapped entity to the array
-                contactEntities.append(contactEntity)
-            }
+            let contactEntity = fetchContactMapper.toEntity(contact)
+            contactEntities.append(contactEntity)
         }
 
         return contactEntities

@@ -1,8 +1,8 @@
 //
 //  AccountScreen.swift
-//  SwiftTemplate
+//  WishWell
 //
-//  Created by Abdelkrim Djoudi on 29/09/2024.
+//  Created by Abdelkrim Djoudi on 04/10/2024.
 //
 
 import SwiftUI

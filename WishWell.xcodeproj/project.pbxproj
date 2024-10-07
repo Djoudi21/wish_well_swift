@@ -36,13 +36,18 @@
 				Data/Dtos/Contact/AddContactDto.swift,
 				Data/Dtos/Contact/FetchContactDto.swift,
 				Data/Mappers/Contact/AddContactMapper.swift,
-				Data/Mappers/Contact/AnyContactMapper.swift,
-				Data/Mappers/Contact/ContactMapperFactory.swift,
 				Data/Mappers/Contact/FetchContactMapper.swift,
 				Data/Repositories/Contact/HttpContactRepository.swift,
 				Domain/Entities/Contact/ContactEntity.swift,
 				Domain/Entities/Contact/EventEntity.swift,
 				Domain/UseCases/Contact/AddContactUseCase.swift,
+				Presentation/Screens/EventsScreen/Components/EventForm.swift,
+				Presentation/Screens/EventsScreen/Components/EventsList.swift,
+				Presentation/Screens/EventsScreen/Components/EventsListItem.swift,
+				Presentation/Screens/EventsScreen/EventFormScreen.swift,
+				Presentation/Screens/EventsScreen/EventsScreen.swift,
+				Presentation/Screens/SettingsScreen/AccountScreen.swift,
+				Presentation/ViewModels/EventViewModel.swift,
 			);
 			target = 84680C772CAA22C00007C88E /* WishWellTests */;
 		};
@@ -52,13 +57,18 @@
 				Data/Dtos/Contact/AddContactDto.swift,
 				Data/Dtos/Contact/FetchContactDto.swift,
 				Data/Mappers/Contact/AddContactMapper.swift,
-				Data/Mappers/Contact/AnyContactMapper.swift,
-				Data/Mappers/Contact/ContactMapperFactory.swift,
 				Data/Mappers/Contact/FetchContactMapper.swift,
 				Data/Repositories/Contact/HttpContactRepository.swift,
 				Domain/Entities/Contact/ContactEntity.swift,
 				Domain/Entities/Contact/EventEntity.swift,
 				Domain/UseCases/Contact/AddContactUseCase.swift,
+				Presentation/Screens/EventsScreen/Components/EventForm.swift,
+				Presentation/Screens/EventsScreen/Components/EventsList.swift,
+				Presentation/Screens/EventsScreen/Components/EventsListItem.swift,
+				Presentation/Screens/EventsScreen/EventFormScreen.swift,
+				Presentation/Screens/EventsScreen/EventsScreen.swift,
+				Presentation/Screens/SettingsScreen/AccountScreen.swift,
+				Presentation/ViewModels/EventViewModel.swift,
 			);
 			target = 84680C812CAA22C00007C88E /* WishWellUITests */;
 		};
@@ -450,7 +460,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.djoudi21.-WishWell.WishWell";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -487,7 +497,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.djoudi21.-WishWell.WishWell";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

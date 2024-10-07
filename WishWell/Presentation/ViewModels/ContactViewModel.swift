@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct NewContactFormValues: Encodable {
-    var username: String
+struct NewContactFormValues {
+    var name: String
     var relationship: RelationshipType
-    var event: EventType
     var birthday: Date
 }
 
@@ -18,7 +17,8 @@ class ContactViewModel: ObservableObject {
     @Published var searchInputValue: String = ""
     @Published var contacts: [ContactEntity] = []
     @Published var filteredContacts: [ContactEntity] = []
-    
+    @Published var isContactFormPresented = false
+
     init() {}
     
     func fetchAllContacts() async throws {
@@ -43,14 +43,11 @@ class ContactViewModel: ObservableObject {
         let addContactUseCase = AddContactUseCase(contactRepository: contactRepository)
         do {
             try await addContactUseCase.execute(newContactForm: newContactForm)
-            // Re-fetch contacts after adding a new one
             try await fetchAllContacts()
-        } catch {
             DispatchQueue.main.async { [weak self] in
-                self?.contacts = []
-                self?.filteredContacts = []
+                self?.isContactFormPresented = false
             }
-        }
+        } catch {}
     }
     
     
@@ -61,7 +58,7 @@ class ContactViewModel: ObservableObject {
         }
         
         filteredContacts = contacts.filter {
-            $0.username.lowercased().contains(inputValue.lowercased())
+            $0.name.lowercased().contains(inputValue.lowercased())
         }
     }
     
@@ -73,5 +70,14 @@ class ContactViewModel: ObservableObject {
     
     func resetFilters() {
         filteredContacts = contacts
+    }
+    
+    func fetchContactsIfNeeded() {
+        guard contacts.isEmpty else { return }
+        Task {
+            do {
+               try await fetchAllContacts() // Your method to fetch contacts
+            } catch {}
+        }
     }
 }

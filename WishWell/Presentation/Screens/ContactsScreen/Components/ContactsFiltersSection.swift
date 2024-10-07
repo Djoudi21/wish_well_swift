@@ -32,8 +32,7 @@ struct ContactsFiltersSection: View {
             }
             
             CustomButton(label: "Reset") {
-                print("TOTO")
-                viewModel.resetFilters()
+                 viewModel.resetFilters()
             }
         }.padding()
     }

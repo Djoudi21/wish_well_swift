@@ -13,27 +13,28 @@ struct TabsView: View {
     
     var body: some View {
                 TabView(selection: $selectedTab) {
-                    ContactsScreen()
-                        .tabItem {
-                            Label("Contacts", systemImage: "person.3")
-                        }.tag(0)
-                    CalendarScreen()
-                        .tabItem {
-                            Label("Calendar", systemImage: "calendar")
-                        }.tag(1)
                     HomeScreen()
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }.tag(2)
+                    ContactsScreen()
+                        .tabItem {
+                            Label("Contacts", systemImage: "person.3")
+                        }.tag(0)
                     GiftsScreen()
                         .tabItem {
                             Label("Gifts", systemImage: "gift")
 
                         }.tag(3)
+                    EventsScreen()
+                        .tabItem {
+                            Label("Events", systemImage: "fireworks")
+
+                        }.tag(4)
                     SettingsScreen()
                         .tabItem {
                             Label("Settings", systemImage: "gear")
-                        }.tag(4)
+                        }.tag(5)
                 }
             }
 }

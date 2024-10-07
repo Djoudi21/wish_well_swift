@@ -18,9 +18,6 @@ struct ContactSearchSection: View {
                 .padding()
                 // Use .onChange to trigger an action when input value changes
                .onChange(of: viewModel.searchInputValue) { oldValue, newValue in
-                   // Perform the action you want when the input value changes
-                   print("Search input value changed to: \(newValue)")
-                   // You can also update other state variables or trigger view model actions here
                    viewModel.searchContact(using: newValue)
                }
         }

@@ -17,12 +17,16 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
     @StateObject private var viewModel = LoginViewModel()
     @StateObject private var contactViewModel = ContactViewModel()
+    @StateObject private var eventViewModel = EventViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
 
     var body: some View {
         Group {
                   if viewModel.isAuthenticated {
                       TabsView()
                           .environmentObject(contactViewModel)
+                          .environmentObject(eventViewModel)
+                          .environmentObject(homeViewModel)
                   } else {
                       LoginScreen()
                           .environmentObject(viewModel)

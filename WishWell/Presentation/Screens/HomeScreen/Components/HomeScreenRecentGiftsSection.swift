@@ -1,19 +1,12 @@
-//
-//  HomeScreenRecentGiftsSection.swift
-//  SwiftTemplate
-//
-//  Created by Abdelkrim Djoudi on 29/09/2024.
-//
-
 import SwiftUI
 
 struct HomeScreenRecentGiftsSection: View {
-    var viewModel: [RecentGift]
-    @Binding var recentGiftsSectionTitle: String
+    @Binding var viewModel: [RecentGift]
+
     @State private var iconName: String = "gift.fill"
     var body: some View {
         HStack {
-                Text(recentGiftsSectionTitle)
+                Text("Recent gifts")
                     .font(.headline)
         }.padding(.horizontal)
         ScrollView(.horizontal, showsIndicators: false) {
@@ -28,8 +21,8 @@ struct HomeScreenRecentGiftsSection: View {
 }
 
 #Preview {
-    HomeScreenRecentGiftsSection(viewModel:  [
+    HomeScreenRecentGiftsSection(viewModel: .constant([
         RecentGift(id:"1", name: "Gift 1",picture: "", price: 20.0, dateReceived: Date()),
         RecentGift(id:"2", name: "Gift 1", picture: "", price: 20.0, dateReceived: Date())
-    ], recentGiftsSectionTitle: .constant("Recent gifts"))
+    ]))
 }

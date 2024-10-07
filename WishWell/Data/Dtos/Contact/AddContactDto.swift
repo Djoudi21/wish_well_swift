@@ -7,16 +7,19 @@
 
 import Foundation
 
-class AddContactDto: Codable {
+class AddContactDto: Codable, CustomStringConvertible {
     let name: String
-    let email: String
     let birthday: Date
     let interests: [String]
     let relationship: RelationshipType
     
-    init(name: String, email: String?, birthday: Date, interests: [String], relationship: RelationshipType) {
+    // Define how this struct will be printed
+     var description: String {
+         return "AddContactDto(name: \(name), birthday: \(birthday), interests: \(interests), relationship: \(relationship))"
+     }
+    
+    init(name: String, birthday: Date, interests: [String], relationship: RelationshipType) {
         self.name = name
-        self.email = email ?? ""
         self.birthday = birthday
         self.interests = interests
         self.relationship = relationship
@@ -25,7 +28,6 @@ class AddContactDto: Codable {
     // MARK: - Coding Keys
     enum CodingKeys: String, CodingKey {
         case name
-        case email
         case birthday
         case interests
         case relationship
@@ -39,8 +41,5 @@ class AddContactDto: Codable {
         birthday = try container.decode(Date.self, forKey: .birthday)
         interests = try container.decode([String].self, forKey: .interests)
         relationship = try container.decode(RelationshipType.self, forKey: .relationship)
-        
-        // Safely decode lastGift as optional
-        email = try container.decodeIfPresent(String.self, forKey: .email) ?? ""
     }
 }

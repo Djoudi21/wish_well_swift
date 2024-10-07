@@ -1,24 +1,16 @@
-//
-//  HomeScreenSection.swift
-//  SwiftTemplate
-//
-//  Created by Abdelkrim Djoudi on 29/09/2024.
-//
-
 import SwiftUI
 
-struct HomeScreenUpcomingBirthdaysSection: View {
-    var upcomingBirthdays: [UpcomingBirthday]
-    @Binding var upcomingBirthdaysSectionTitle: String
+struct HomeScreenUpcomingEventsSection: View {
+    @Binding var upcomingEvents: [EventEntity]
 
     var body: some View {
         HStack {
-            Text(upcomingBirthdaysSectionTitle)
+            Text("Upcoming Events")
                 .font(.headline)
        }
         ScrollView(.horizontal, showsIndicators: false) {
           HStack(spacing: 16) {
-              ForEach(upcomingBirthdays, id: \.self.id) { birthday in
+              ForEach(upcomingEvents, id: \.self.id) { event in
                   VStack {
                       ZStack(alignment: .topTrailing) {
                           Image(systemName: "person.fill").resizable()
@@ -29,7 +21,7 @@ struct HomeScreenUpcomingBirthdaysSection: View {
                               .cornerRadius(60)
                           
                           // Calculate days left
-                          let daysLeft = daysUntil(birthdayDate: birthday.userBirthdayCountdown)
+                          let daysLeft = daysUntil(eventDate: event.date)
                         
                           // Badge overlay with GeometryReader to adjust size based on content
                           GeometryReader { geometry in
@@ -47,7 +39,7 @@ struct HomeScreenUpcomingBirthdaysSection: View {
                           }
                           .frame(width: 40, height: 20) // Provide a fixed frame for the GeometryReader
                       }
-                      Text(birthday.userName)
+                      Text(event.name)
                           .font(.subheadline)
                           .padding(.top, 2)
                   }.padding(.top, 20)
@@ -56,23 +48,10 @@ struct HomeScreenUpcomingBirthdaysSection: View {
           .padding(.horizontal)
       }
     }
-    
-    // Function to calculate days until the birthday
-    private func daysUntil(birthdayDate: Date) -> Int {
-        let calendar = Calendar.current
-        let currentDate = Date()
-        
-        // Get the difference in days
-        if let days = calendar.dateComponents([.day], from: currentDate, to: birthdayDate).day {
-            return days < 0 ? 0 : days // Return 0 if the birthday is in the past
-        }
-        return 0
-    }
 }
 
 #Preview {
-    HomeScreenUpcomingBirthdaysSection(upcomingBirthdays: [
-        UpcomingBirthday(id: "1", userName: "Alice", userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "2", userName: "Bob", userAvatar: "", userBirthdayCountdown: Date())
-    ], upcomingBirthdaysSectionTitle: .constant("Upcoming birthdays"))
+    HomeScreenUpcomingEventsSection(upcomingEvents: .constant([
+        EventEntity(id: UUID(), name: "anniv brks", type: .birthday, date: Date(), contactIds: [],contacts: [ContactEntity(id: UUID(), name: "becks", relationship: .friend, nextEvent: nil)]),
+    ]))
 }

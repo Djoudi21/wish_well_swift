@@ -16,13 +16,6 @@ protocol Gift {
     var price: Double { get }
 }
 
-struct UpcomingBirthday: Identifiable {
-    var id: String
-    var userName: String
-    var userAvatar: String
-    var userBirthdayCountdown: Date
-}
-
 struct RecentGift: Identifiable, Gift {
     var id: String
     var name: String
@@ -41,15 +34,7 @@ struct SuggestedGift: Identifiable, Gift {
 
 
 class HomeViewModel: ObservableObject {
-    @Published var upcomingBirthdays: [UpcomingBirthday] = [
-        UpcomingBirthday(id: "1", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "2", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "3", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "4", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "5", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "6", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-        UpcomingBirthday(id: "7", userName: "Alice",userAvatar: "", userBirthdayCountdown: Date()),
-    ]
+    @Published var upcomingEvents: [EventEntity] = []
     @Published var recentGifts: [RecentGift] = [
         RecentGift(id:"1", name: "Gift 1",picture: "", price: 20.0, dateReceived: Date()),
         RecentGift(id:"2", name: "Gift 1", picture: "", price: 20.0, dateReceived: Date()),
@@ -65,8 +50,22 @@ class HomeViewModel: ObservableObject {
         SuggestedGift(id:"2", name: "Gift 1", picture: "", price: 20.0, description: "qsdqds")
     ]
     
-    init() {
-        // Any initialization logic, such as fetching stored credentials
+    init() {}
+    
+    func fetchAllEvents()  async throws {
+        let eventRepository = HttpEventRepository()
+        let fetchAllEventsUseCase = FetchAllEventsUseCase(eventRepository: eventRepository)
+        do {
+            let fetchedEvents = try await fetchAllEventsUseCase.execute()
+
+            DispatchQueue.main.async { [weak self] in
+                self?.upcomingEvents = fetchedEvents // Ensure this runs on the main thread
+            }
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.upcomingEvents = []
+            }
+        }
     }
     
     

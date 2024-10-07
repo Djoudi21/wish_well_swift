@@ -9,9 +9,7 @@ import SwiftUI
 
 struct HomeScreenAddContactCta: View {
     var body: some View {
-        CustomButton(label: "Add contact") {
-            print("TOTO")
-        }
+        CustomButton(label: "Add contact") {}
     }
 }
 

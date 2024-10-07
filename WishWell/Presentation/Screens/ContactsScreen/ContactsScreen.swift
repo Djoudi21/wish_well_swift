@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContactsScreen: View {
     @EnvironmentObject var viewModel: ContactViewModel // Access the ViewModel from the environment
-    @State private var isContactFormresented = false // State to trigger the modal
 
     var body: some View {
         NavigationStack {
@@ -22,7 +21,7 @@ struct ContactsScreen: View {
             }.navigationTitle("").toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                   Button(action: {
-                      isContactFormresented = true
+                      viewModel.isContactFormPresented = true
                   }) {
                       Image(systemName: "plus.circle")
                           .resizable()
@@ -32,9 +31,8 @@ struct ContactsScreen: View {
                   }
               }
             }
-            
             // Sheet presentation for the modal view
-            .sheet(isPresented: $isContactFormresented) {
+            .sheet(isPresented: $viewModel.isContactFormPresented) {
                 ContactFormScreen() // This will be presented modally
             }
         }

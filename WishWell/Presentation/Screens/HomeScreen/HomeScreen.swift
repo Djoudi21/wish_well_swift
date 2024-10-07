@@ -8,25 +8,19 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @StateObject private var viewModel = HomeViewModel()
+    @EnvironmentObject var viewModel: HomeViewModel
 
-    @State private var items3 = ["Item 1", "Item 2", "Item 4", "Item 5"]
-
-    @State private var upcomingBirthdaysSectionTitle =  "Upcoming Birthdays"
-    @State private var recentGiftsSectionTitle =  "Recent gifts"
-    @State private var giftSuggestionsSectionTitle =  "Suggested gifts"
-   
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
                 Spacer()
 
-                HomeScreenUpcomingBirthdaysSection(upcomingBirthdays: viewModel.upcomingBirthdays, upcomingBirthdaysSectionTitle: $upcomingBirthdaysSectionTitle)
+                HomeScreenUpcomingEventsSection(upcomingEvents: $viewModel.upcomingEvents)
                 Spacer()
-                HomeScreenRecentGiftsSection(viewModel: viewModel.recentGifts, recentGiftsSectionTitle: $recentGiftsSectionTitle)
+                HomeScreenRecentGiftsSection(viewModel: $viewModel.recentGifts)
                 Spacer()
 
-                HomeScreenGiftSuggestionsSection(viewModel: viewModel.suggestedGifts, giftSuggestionsSectionTitle: $giftSuggestionsSectionTitle)
+                HomeScreenGiftSuggestionsSection(viewModel: $viewModel.suggestedGifts)
                 Spacer()
 
                 HomeScreenAddContactCta()
@@ -47,6 +41,15 @@ struct HomeScreen: View {
                 }
             }
         }
+        .task {
+           do {
+               // Assuming your viewModel has an async method to fetch contacts
+               try await viewModel.fetchAllEvents()
+           } catch {
+               // Handle any errors
+               print("Failed to fetch contacts: \(error)")
+           }
+       }
     }
 }
 

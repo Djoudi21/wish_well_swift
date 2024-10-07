@@ -20,9 +20,9 @@ class InMemoryContactRepository: ContactRepositoryProtocol {
     }
     
     func fetchContact(by id: UUID) -> ContactEntity? {
-        return ContactEntity(id: UUID(), username: "Maman", email: "a@a.com", relationship:.colleague, events: [
-            EventEntity(id: "1", type: .birthday, date: Date())
-        ], nextEvent: EventEntity(id: "1", type: .birthday, date: Date()))
+        return ContactEntity(id: UUID(), name: "Maman", relationship:.colleague, events: [
+            EventEntity(id: UUID(), name: "", type: .birthday, date: Date(), contactIds: [UUID()])
+        ], nextEvent: EventEntity(id: UUID(), name: "", type: .birthday, date: Date(), contactIds: [UUID()]))
     }
     
     func updateContact(_ contact: ContactEntity) {

@@ -10,8 +10,7 @@ import Foundation
 class AddContactMapper {
     func toDto(_ formValues: NewContactFormValues) -> AddContactDto {
         return AddContactDto(
-            name: formValues.username,
-            email: "a@ssa.com",
+            name: formValues.name,
             birthday: formValues.birthday,
             interests: [],
             relationship: formValues.relationship

@@ -20,18 +20,14 @@ class LoginViewModel: ObservableObject {
         }
 
         if username == "User" && password == "Password" {
-            print("VALID")
             isAuthenticated = true
             errorMessage = nil
         } else {
-            print("IN VALID")
             isAuthenticated = false
             errorMessage = "Invalid credentials."
         }
     }
     
     
-    func loginFromSocialLogin( ) {
-        print("social login")
-    }
+    func loginFromSocialLogin( ) {}
 }

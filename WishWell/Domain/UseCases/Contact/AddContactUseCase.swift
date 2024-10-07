@@ -17,8 +17,8 @@ class AddContactUseCase {
     
     
     func execute(newContactForm: NewContactFormValues)  async throws -> Void {
-            let dto = addContactMapper.toDto(newContactForm)
-            try await contactRepository.addContact(dto)
-        }
+        let dto = addContactMapper.toDto(newContactForm)
+        try await contactRepository.addContact(dto)
     }
+}
 

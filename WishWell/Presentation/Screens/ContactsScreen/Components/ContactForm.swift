@@ -1,35 +1,19 @@
-//
-//  ContactForm.swift
-//  WishWell
-//
-//  Created by Abdelkrim Djoudi on 02/10/2024.
-//
-
 import SwiftUI
 
 struct ContactForm: View {
-    @EnvironmentObject var viewModel: ContactViewModel // Access the ViewModel from the environment
-    @State private var username: String = ""
-    @State private var relationship: RelationshipType = .family
-    @State private var event: EventType = .birthday
-    @State private var selectedRelationshipOption = "Famille"
-    @State private var selectedEventOption = "Anniversaire"
-    @State private var birthday: Date = Date() // State variable for the selected date
+    @Binding var name: String
+    @Binding var relationship: RelationshipType
+    @Binding var birthday: Date
+    @Binding var selectedRelationshipOption: String
 
-    // Create a dictionary mapping labels to RelationshipType
    let relationshipOptions: [String: RelationshipType] = [
        "Famille": .family,
        "Amis": .friend,
        "Collegues": .colleague
    ]
-    
-    // Create a dictionary mapping labels to RelationshipType
-    let eventOptions: [String: EventType] = [
-        "Anniversaire": .birthday
-   ]
-    
+
     var body: some View {
-        TextField("Username", text: $username)
+        TextField("Name", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
         
@@ -41,39 +25,16 @@ struct ContactForm: View {
         .pickerStyle(MenuPickerStyle())
         .onChange(of: selectedRelationshipOption) { oldValue, newValue in
             if let selectedRelationship = relationshipOptions[newValue] {
-                   relationship = selectedRelationship
-               }
+               relationship = selectedRelationship
+           }
         }
-        
-        Picker("Select an event", selection: $selectedEventOption) {
-            ForEach(Array(eventOptions.keys), id: \.self) { label in
-                Text(label).tag(eventOptions[label])
-            }
-        }
-        .pickerStyle(MenuPickerStyle())
-        .onChange(of: selectedEventOption) { oldValue, newValue in
-            let selectedEvent = eventOptions[newValue] ?? .birthday
-            event = selectedEvent
-        }
-        
+  
         DatePicker("Birthday", selection: $birthday, displayedComponents: .date)
                        .datePickerStyle(DefaultDatePickerStyle()) // Style for the DatePicker
                        .padding()
-        
-        CustomButton(label: "Submit") {
-            Task {
-                   let newContactValues = NewContactFormValues(
-                       username: username,
-                       relationship: relationship,
-                       event: event,
-                       birthday: birthday
-                   )
-                  try await viewModel.addContact(using: newContactValues)
-               }
-        }
     }
 }
 
 #Preview {
-    ContactForm()
+    ContactForm(name: .constant("username"), relationship: .constant(.colleague), birthday: .constant(Date()), selectedRelationshipOption: .constant("Famille"))
 }

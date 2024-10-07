@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct HomeScreenGiftSuggestionsSection: View {
-    var viewModel: [SuggestedGift]
-    @Binding var giftSuggestionsSectionTitle: String
+    @Binding var viewModel: [SuggestedGift]
+
     @State private var iconName: String = "gift.fill"
 
     var body: some View {
         HStack {
-                Text(giftSuggestionsSectionTitle)
+                Text("Suggested gifts")
                     .font(.headline)
         }.padding(.horizontal)
         ScrollView(.horizontal, showsIndicators: false) {
@@ -29,8 +29,8 @@ struct HomeScreenGiftSuggestionsSection: View {
 }
 
 #Preview {
-    HomeScreenGiftSuggestionsSection(viewModel: [
+    HomeScreenGiftSuggestionsSection(viewModel: .constant([
         SuggestedGift(id:"1", name: "Gift 1",picture: "", price: 20.0, description: "sdf"),
         SuggestedGift(id:"2", name: "Gift 1", picture: "", price: 20.0, description: "qsdqds")
-    ], giftSuggestionsSectionTitle: .constant("Suggested gifts"))
+    ]))
 }
