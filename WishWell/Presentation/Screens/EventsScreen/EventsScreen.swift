@@ -29,10 +29,7 @@ struct EventsScreen: View {
             do {
                 // Assuming your viewModel has an async method to fetch contacts
                 try await viewModel.fetchAllEvents()
-            } catch {
-                // Handle any errors
-                print("Failed to fetch contacts: \(error)")
-            }
+            } catch {}
         }
     }
 }

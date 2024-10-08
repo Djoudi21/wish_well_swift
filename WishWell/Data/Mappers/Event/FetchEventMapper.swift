@@ -27,13 +27,13 @@ class FetchEventMapper {
      private func convertToFetchContactDto(_ contactEntity: ContactEntity) -> FetchContactDto {
          // Implement the conversion logic here
          // Example:
-         return FetchContactDto(id: contactEntity.id ?? UUID(), name: contactEntity.name, birthday: Date(), interests: [], relationship: .colleague, createdAt: Date(), updatedAt: Date(), nextEvent: nil)
+         return FetchContactDto(id: contactEntity.id ?? UUID(), name: contactEntity.name, birthday: Date(), interests: [], relationship: .colleague, createdAt: Date(), updatedAt: Date(), events: nil)
      }
 
      // Placeholder method to convert FetchContactDto to ContactEntity
      private func convertToContactEntity(_ fetchContactDto: FetchContactDto) -> ContactEntity {
          // Implement the conversion logic here
          // Example:
-         return ContactEntity(id: fetchContactDto.id, name: fetchContactDto.name, relationship: .colleague, nextEvent: nil)
+         return ContactEntity(id: fetchContactDto.id, name: fetchContactDto.name, relationship: .colleague)
      }
 }

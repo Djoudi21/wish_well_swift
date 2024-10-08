@@ -36,7 +36,7 @@ class HttpEventRepository: EventRepositoryProtocol {
               let url = URL(string: "\(baseURL)/users/eccc4e0f-a701-490b-8046-118cfea9491f/events") else {
             throw APIError.invalidURL // Handle invalid URL error
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST" // Set the HTTP method to POST
         request.setValue("application/json", forHTTPHeaderField: "Content-Type") // Set the Content-Type header
@@ -49,11 +49,11 @@ class HttpEventRepository: EventRepositoryProtocol {
            
         let jsonData = try encoder.encode(event)
         request.httpBody = jsonData
-    
+
         do {
             // Make the network request asynchronously
             let (data, response) = try await URLSession.shared.data(for: request)
-            
+         
             // Check if the response is valid and has a status code of 200
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 else {
                 _ = String(data: data, encoding: .utf8)

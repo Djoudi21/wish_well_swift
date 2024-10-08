@@ -20,7 +20,7 @@ class FetchAllContactsUseCase {
     // Marking execute() as async throws
     func execute() async throws -> [ContactEntity] {
         let contacts =  try await contactRepository.fetchAllContacts();
-
+        
         // Create an array to hold the mapped entities
         var contactEntities: [ContactEntity] = []
         

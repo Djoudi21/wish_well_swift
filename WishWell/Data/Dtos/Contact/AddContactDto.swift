@@ -13,11 +13,6 @@ class AddContactDto: Codable, CustomStringConvertible {
     let interests: [String]
     let relationship: RelationshipType
     
-    // Define how this struct will be printed
-     var description: String {
-         return "AddContactDto(name: \(name), birthday: \(birthday), interests: \(interests), relationship: \(relationship))"
-     }
-    
     init(name: String, birthday: Date, interests: [String], relationship: RelationshipType) {
         self.name = name
         self.birthday = birthday

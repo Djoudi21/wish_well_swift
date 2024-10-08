@@ -37,6 +37,7 @@ class EventViewModel: ObservableObject {
     func addEvent(using newEventForm: NewEventFormValues) async throws {
         let eventRepository = HttpEventRepository()
         let addEventUseCase = AddEventUseCase(eventRepository: eventRepository)
+
         do {
             try await addEventUseCase.execute(newEventForm: newEventForm)
             try await fetchAllEvents()

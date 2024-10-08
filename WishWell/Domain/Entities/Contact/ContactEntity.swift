@@ -20,18 +20,14 @@ struct ContactEntity: Identifiable, Codable {
     var name: String
     var relationship: RelationshipType
     var events: [EventEntity]
-    var nextEvent: EventEntity?
     
-    init(
-           id: UUID?,
-           name: String,
-           relationship: RelationshipType,
-           events: [EventEntity] = [],
-           nextEvent: EventEntity?
-       ) {
-           self.id = id
-           self.name = name
-           self.relationship = relationship
-           self.events = events
-           self.nextEvent = nextEvent
-       }}
+    var nextEvent: EventEntity? {
+        return mostRecentEvent(events: events) ?? nil
+    }
+    
+    init(id: UUID?, name: String, relationship: RelationshipType, events: [EventEntity] = []) {
+        self.id = id
+        self.name = name
+        self.relationship = relationship
+        self.events = events
+    }}

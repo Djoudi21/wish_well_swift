@@ -10,11 +10,11 @@ class FetchContactMapper {
             relationship: entity.relationship, // This should match the type
             createdAt: Date(), // Set as needed; consider using actual creation date if available
             updatedAt: Date(), // Set as needed; consider using actual update date if available
-            nextEvent: nil
+            events: []
         )
     }
         
     func toEntity(_ data: FetchContactDto) -> ContactEntity {
-        return ContactEntity(id: data.id, name: data.name, relationship: data.relationship, nextEvent: data.nextEvent ?? nil)
+        return ContactEntity(id: data.id, name: data.name, relationship: data.relationship, events: data.events ?? [])
     }
 }

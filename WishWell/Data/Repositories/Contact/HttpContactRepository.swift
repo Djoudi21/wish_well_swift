@@ -17,12 +17,16 @@ class HttpContactRepository: ContactRepositoryProtocol {
         do {
             // Make the network request asynchronously
             let (data, response) = try await URLSession.shared.data(from: url)
+            
+            //if let jsonString = String(data: data, encoding: .utf8) {
+             //print("Raw JSON Response: \(jsonString)")
+            //}
 
             // Check if the response is valid and has a status code of 200
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 throw APIError.invalidResponse // Handle invalid response error
             }
-            
+
             // Create a custom date formatter for decoding
             let isoDateFormatter = DateFormatter()
             let decoder = JSONDecoder()
@@ -66,9 +70,6 @@ class HttpContactRepository: ContactRepositoryProtocol {
             // Make the network request asynchronously
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            //if let jsonString = String(data: data, encoding: .utf8) {
-                            //print("Raw JSON Response: \(jsonString)")
-                       // }
             // Check if the response is valid and has a status code of 200
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 else {
                 _ = String(data: data, encoding: .utf8)

@@ -20,6 +20,7 @@ struct ContactsListItem: View {
             }
             HStack{
                 if let nextEvent = contact.nextEvent {
+                    Text("Prochain evenement").padding()
                     Text(nextEvent.type.rawValue).padding()
                     Text(formatDate(nextEvent.date)).padding()
                 } else {
@@ -38,5 +39,5 @@ struct ContactsListItem: View {
 #Preview {
     ContactsListItem(contact: .constant(ContactEntity(id: UUID(), name: "toto", relationship: .family, events: [
         EventEntity(id: UUID(), name: "event name", type: .birthday, date: Date(), contactIds: [UUID()])
-    ], nextEvent: EventEntity(id: UUID(), name: "event name", type: .birthday, date: Date(), contactIds: [UUID()]))))
+    ])))
 }

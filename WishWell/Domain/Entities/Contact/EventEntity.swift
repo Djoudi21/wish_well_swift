@@ -1,9 +1,3 @@
-//
-//  EventEntity.swift
-//  WishWell
-//
-//  Created by Abdelkrim Djoudi on 03/10/2024.
-//
 
 import Foundation
 

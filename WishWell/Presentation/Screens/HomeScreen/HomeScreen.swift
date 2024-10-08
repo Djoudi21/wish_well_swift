@@ -28,10 +28,7 @@ struct HomeScreen: View {
 
             }.padding().navigationTitle("").toolbar {
                   ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Your button action here
-                        print("Button tapped")
-                    }) {
+                    Button(action: {}) {
                         Image(systemName: "bell.fill")
                             .resizable()
                             .scaledToFit()
@@ -45,10 +42,7 @@ struct HomeScreen: View {
            do {
                // Assuming your viewModel has an async method to fetch contacts
                try await viewModel.fetchAllEvents()
-           } catch {
-               // Handle any errors
-               print("Failed to fetch contacts: \(error)")
-           }
+           } catch {}
        }
     }
 }

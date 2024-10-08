@@ -27,7 +27,7 @@ struct ContactsList: View {
 #Preview {
     let viewModel = ContactViewModel()
     let filteredContacts = viewModel.filteredContacts
-    ContactsList(filteredContacts: .constant([ContactEntity(id: UUID(), name: "Maman", relationship:.colleague, events: [
+    ContactsList(filteredContacts:  .constant([ContactEntity(id: UUID(), name: "Maman", relationship:.colleague, events: [
         EventEntity(id: UUID(), name: "name", type: .birthday, date: Date(), contactIds:[UUID()])
-    ], nextEvent: EventEntity(id: UUID(), name: "name", type: .birthday, date: Date(), contactIds: [UUID()]))]))
+    ])]))
 }

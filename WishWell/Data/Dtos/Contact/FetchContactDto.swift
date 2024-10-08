@@ -15,9 +15,9 @@ class FetchContactDto: Decodable {
     var interests: [String]
     var createdAt: Date
     var updatedAt: Date
-    var nextEvent: EventEntity?
+    var events: [EventEntity]?
     
-    init(id: UUID, name: String, birthday: Date, interests: [String], relationship: RelationshipType, createdAt: Date, updatedAt: Date, nextEvent: EventEntity?) {
+    init(id: UUID, name: String, birthday: Date, interests: [String], relationship: RelationshipType, createdAt: Date, updatedAt: Date, events: [EventEntity]?) {
         self.id = id
         self.name = name
         self.birthday = birthday
@@ -25,7 +25,7 @@ class FetchContactDto: Decodable {
         self.relationship = relationship
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        self.nextEvent = nextEvent ?? nil
+        self.events = events ?? nil
     }
     
     // MARK: - Coding Keys
@@ -39,7 +39,7 @@ class FetchContactDto: Decodable {
         case createdAt
         case updatedAt
         case userId
-        case nextEvent
+        case events
     }
     
     // MARK: - Decodable Implementation
@@ -54,6 +54,8 @@ class FetchContactDto: Decodable {
         
         createdAt = try container.decode(Date.self, forKey: .createdAt)
         updatedAt = try container.decode(Date.self, forKey: .updatedAt)
-        nextEvent = try container.decodeIfPresent(EventEntity.self, forKey: .nextEvent) ?? nil
+        // Log events decoding for troubleshooting
+        let decodedEvents = try container.decodeIfPresent([EventEntity].self, forKey: .events)
+        events = decodedEvents ?? nil
     }
 }

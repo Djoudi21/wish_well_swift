@@ -44,7 +44,7 @@ struct EventForm: View {
             }
             
             DatePicker("Date", selection: $date, displayedComponents: .date)
-                           .datePickerStyle(DefaultDatePickerStyle()) // Style for the DatePicker
+                           .datePickerStyle(DefaultDatePickerStyle())
                            .padding()
             
             Picker("Select a contact", selection: $selectedContactId) {

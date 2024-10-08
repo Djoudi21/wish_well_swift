@@ -52,6 +52,6 @@ struct HomeScreenUpcomingEventsSection: View {
 
 #Preview {
     HomeScreenUpcomingEventsSection(upcomingEvents: .constant([
-        EventEntity(id: UUID(), name: "anniv brks", type: .birthday, date: Date(), contactIds: [],contacts: [ContactEntity(id: UUID(), name: "becks", relationship: .friend, nextEvent: nil)]),
+        EventEntity(id: UUID(), name: "anniv brks", type: .birthday, date: Date(), contactIds: [],contacts: [ContactEntity(id: UUID(), name: "becks", relationship: .friend)]),
     ]))
 }

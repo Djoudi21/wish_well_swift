@@ -26,9 +26,7 @@ struct LoginForm: View {
         
         CustomButton(label: "Login") {
             viewModel.login()
-            if viewModel.isAuthenticated {
-                print("LA")
-            }
+            if viewModel.isAuthenticated {}
         }
     }
 }
